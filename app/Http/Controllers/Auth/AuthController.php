@@ -80,9 +80,18 @@ class AuthController extends Controller
      */
     function authFacebook(AuthenticateUser $authenticateUser, Request $request){
 
-        return $authenticateUser->execute($request->has('code'), $this);
+        // Redirect to home if user cancelled facebook login
+        if ($request->has('error')) {
+            return redirect('/');
+        }
+
+        // Process to/with facebook callback
+        return $authenticateUser->execute($request->has('code'), $this, 'facebook');
     }
 
+    /**
+     * Redirect logged in user to dashboard
+     */
     public function userHasLoggedIn($user)
     {
         $type = $user->type;

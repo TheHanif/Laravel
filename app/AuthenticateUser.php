@@ -19,21 +19,26 @@ class AuthenticateUser
 
 	}
 
-	public function execute($hasCode, $listener)
+	public function execute($hasCode, $listener, $driver)
 	{
-		if(! $hasCode) return $this->getAuthrizationFirst();
-		$user = $this->users->findByUserNameOrCreate($this->getFacebookUser());
+		// Redirect to to social for get authenticate
+		if(! $hasCode) return $this->getAuthrizationFirst($driver);
+
+		// Process call request and retured data
+		$user = $this->users->findByUserNameOrCreate(Socialite::driver($driver)->user());
+
+		// Login user to laravel
 		Auth::login($user, true);
+
+		// Redirect user to its dashboard
 		return $listener->userHasLoggedIn($user);
 	}
 
-	public function getAuthrizationFirst()
+	/**
+	 * Get authorized with driver
+	 */
+	public function getAuthrizationFirst($driver)
 	{
-		return Socialite::driver('facebook')->redirect();
-	}
-
-	public function getFacebookUser()
-	{
-		return Socialite::driver('facebook')->user();
+		return Socialite::driver($driver)->redirect();
 	}
 }
