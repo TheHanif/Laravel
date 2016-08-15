@@ -11,7 +11,21 @@
 |
 */
 
+use App\User;
+use App\Role;
+
+Route::get('/role/{user}/{role}', function ($user, $role){
+    $user = User::where('id', '=', $user)->first();
+    $user->roles()->attach($role);
+});
+
+Route::get('/permission/{role}/{per}', function ($role, $per){
+    $role = Role::where('id', '=', $role)->first();
+    $role->attachPermission($per);
+});
+
 Route::get('/', function () {
+
     return view('welcome');
 });
 
@@ -35,11 +49,12 @@ Route::group(['prefix'=>'api', 'as'=>'admin.', 'middleware' => 'auth:api'], func
     Route::get('test/{id}', ['as' => 'dashboard', 'uses' => 'HomeController@test']);
 
 });
+
 /**
  * ADMIN
  */
 Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => ['auth','custom:admin']], function () {
-    Route::get('dashboard', ['as' => 'dashboard', function () {
+    Route::get('dashboard', ['middleware' => ['permission:create-user'], 'as' => 'dashboard', function () {
         return 'Admin dashboard';
     }]);
 });

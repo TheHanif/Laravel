@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar');
             $table->string('source'); //login source
             $table->string('type');
+            $table->string('api_token', 60)->unique();
             $table->rememberToken();
             $table->timestamps();
         });

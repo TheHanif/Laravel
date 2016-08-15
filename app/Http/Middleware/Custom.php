@@ -21,9 +21,9 @@ class Custom
         if (Auth::user()->type == $type)
         {
             return $next($request);
-        }else{
-            return response('Unauthorized.', 401);
         }
+
+        return response('Unauthorized.', 401);
 
     }
 }
