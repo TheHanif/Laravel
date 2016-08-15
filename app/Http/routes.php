@@ -25,9 +25,20 @@ Route::get('auth/facebook', [ 'as' => 'facebook', 'uses' => 'Auth\AuthController
 Route::auth();
 
 /**
+ * APIs
+ */
+Route::group(['prefix'=>'api', 'as'=>'admin.', 'middleware' => 'auth:api'], function () {
+    
+    // APIs routes goes here
+    // $request->wantsJson();
+
+    Route::get('test/{id}', ['as' => 'dashboard', 'uses' => 'HomeController@test']);
+
+});
+/**
  * ADMIN
  */
-Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => 'custom:admin'], function () {
+Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => ['auth','custom:admin']], function () {
     Route::get('dashboard', ['as' => 'dashboard', function () {
         return 'Admin dashboard';
     }]);
@@ -36,7 +47,7 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => 'custom:admin']
 /**
  * BRANCH
  */
-Route::group(['prefix'=>'branch', 'as'=>'branch.', 'middleware' => 'custom:branch'], function () {
+Route::group(['prefix'=>'branch', 'as'=>'branch.', 'middleware' => ['auth','custom:branch']], function () {
     Route::get('dashboard', ['as' => 'dashboard', function () {
         return 'Branch dashboard';
     }]);
@@ -45,7 +56,7 @@ Route::group(['prefix'=>'branch', 'as'=>'branch.', 'middleware' => 'custom:branc
 /**
  * CUSTOMER
  */
-Route::group(['as' => 'customer.', 'middleware' => 'custom:customer'], function () {
+Route::group(['as' => 'customer.', 'middleware' => ['auth','custom:customer']], function () {
     Route::get('dashboard', ['as' => 'dashboard', function () {
         return 'Customer dashboard';
     }]);

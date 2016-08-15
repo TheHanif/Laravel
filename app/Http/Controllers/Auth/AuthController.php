@@ -104,7 +104,7 @@ class AuthController extends Controller
                 return redirect(route('brance::dashboard'));
                 break;
             default:
-                return redirect(route('admin.dashboard'));
+                return redirect(route('customer.dashboard'));
                 break;
         }
     }

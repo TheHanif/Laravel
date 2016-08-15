@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Custom
 {
@@ -16,12 +17,13 @@ class Custom
     public function handle($request, Closure $next, $type)
     {
 
-        // Is logged in and has the required type
-        if (auth()->check() && auth()->user()->type == $type)
+        // Check if user has the required type;
+        if (Auth::user()->type == $type)
         {
             return $next($request);
+        }else{
+            return response('Unauthorized.', 401);
         }
 
-        return redirect('/');
     }
 }
