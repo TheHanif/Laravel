@@ -2,6 +2,7 @@
 namespace App;
 
 use App\Repositories\UserRepository;
+use Illuminate\Auth\Authenticatable;
 use Auth;
 use Socialite;
 
