@@ -26,7 +26,7 @@ Route::get('/permission/{role}/{per}', function ($role, $per){
 
 Route::get('/', function () {
 
-    return view('welcome');
+    return view('frontend.welcome');
 });
 
 Route::get('/home', 'HomeController@index');
@@ -54,7 +54,7 @@ Route::group(['prefix'=>'api', 'as'=>'admin.', 'middleware' => 'auth:api'], func
  * ADMIN
  */
 Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => ['auth','custom:admin']], function () {
-    Route::get('dashboard', ['middleware' => ['permission:create-user'], 'as' => 'dashboard', function () {
+    Route::get('dashboard', ['middleware' => ['permission:create-users'], 'as' => 'dashboard', function () {
         return 'Admin dashboard';
     }]);
 });
@@ -76,3 +76,6 @@ Route::group(['as' => 'customer.', 'middleware' => ['auth','custom:customer']], 
         return 'Customer dashboard';
     }]);
 });
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

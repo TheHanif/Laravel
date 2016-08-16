@@ -23,7 +23,7 @@ class Custom
             return $next($request);
         }
 
-        return response('Unauthorized.', 401);
+        return abort(403, 'Unauthorized action');
 
     }
 }

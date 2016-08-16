@@ -155,6 +155,7 @@ return [
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Acoustep\EntrustGui\EntrustGuiServiceProvider::class,
 
 
         /*

@@ -50,5 +50,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'custom' => \App\Http\Middleware\Custom::class,
+        'entrust-gui' => \App\Http\Middleware\entrust_gui::class,
     ];
 }
