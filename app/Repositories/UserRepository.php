@@ -8,10 +8,10 @@ use Auth;
 
  	public function findByUserNameOrCreate($userData)
  	{
- 		$user = User::where('email', $userData->email)->take(1)->get();
+ 		$user = User::where('email', $userData->email)->first();
 
  		if ($user->count() > 0) {
- 			return Auth::loginUsingId($user[0]->id);
+ 			return $user;
  		}else{
  			return User::firstOrCreate([
 	 			'name' 		=> $userData->name,

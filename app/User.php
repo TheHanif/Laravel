@@ -44,8 +44,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $rulesets = [
 
         'creating' => [
-            'email'      => 'required|email|unique:users',
-            'password'   => 'required',
+            'email'      => 'required|email|unique:users'
         ],
 
         'updating' => [
